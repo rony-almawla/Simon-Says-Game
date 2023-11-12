@@ -6,7 +6,7 @@ let userClickedPattern = [];
 let started = false;
 let level = 0;
 
-document.addEventListener("keypress", function(event) {
+document.addEventListener('keypress', function(event) {
   if (!started) {
     document.getElementById("level-title").textContent = "Level " + level;
     nextSequence();
@@ -16,8 +16,8 @@ document.addEventListener("keypress", function(event) {
 
 const buttons = document.querySelectorAll(".btn");
 buttons.forEach(function(button) {
-  button.addEventListener("click", function() {
-    const userChosenColour = this.id;
+  button.addEventListener('click', function(event) {
+    const userChosenColour = event.target.id;
     userClickedPattern.push(userChosenColour);
 
     playSound(userChosenColour);
@@ -55,17 +55,19 @@ function nextSequence() {
   const randomChosenColour = buttonColours[randomNumber];
   gamePattern.push(randomChosenColour);
 
-  document.getElementById(randomChosenColour).style.display = "block";
+  const selectedButton = document.getElementById(randomChosenColour);
+  selectedButton.style.display = "none";
   setTimeout(function() {
-    document.getElementById(randomChosenColour).style.display = "none";
-  }, 200);
+    selectedButton.style.display = "block";
+  }, 100);
   playSound(randomChosenColour);
 }
 
 function animatePress(currentColor) {
-  document.getElementById(currentColor).classList.add("pressed");
+  const selectedButton = document.getElementById(currentColor);
+  selectedButton.classList.add("pressed");
   setTimeout(function() {
-    document.getElementById(currentColor).classList.remove("pressed");
+    selectedButton.classList.remove("pressed");
   }, 100);
 }
 
